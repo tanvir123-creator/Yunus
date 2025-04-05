@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yunus Bot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #f4f4f9;
+      color: #333;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      margin: 0;
+      padding: 10px;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #007BFF;
+      margin-bottom: 5px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 20px;
+      color: #555;
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #chat-container {
+      width: 100%;
+      max-width: 600px;
+      height: 60vh;
+      border: 2px solid #007BFF;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      font-size: 18px;
+    }
+
+    .message {
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .user {
+      color: #007BFF;
+      font-weight: bold;
+    }
+
+    .bot {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    #input-box {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 14px;
+      font-size: 18px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 14px 20px;
+      font-size: 18px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Complain Box</h1>
+  <h3>Chief Adviser, Government of Bangladesh</h3>
+
+  <div>
+    <div id="chat-container"></div>
+    <div id="input-box">
+      <input type="text" id="userInput" placeholder="Type your complaint..." />
+      <button onclick="handleSend()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatContainer = document.getElementById("chat-container");
+    const userInput = document.getElementById("userInput");
+
+    function handleSend() {
+      const input = userInput.value.trim().toLowerCase();
+      if (!input) return;
+
+      addMessage("user", input);
+
+      if (input.includes("hi") || input.includes("hello") || input.includes("হ্যালো") || input.includes("কেমন আছেন")) {
+        if (input.includes("হ্যালো") || input.includes("কেমন আছেন")) {
+          addMessage("bot", "হ্যালো! আপনি কেমন আছেন?");
+        } else {
+          addMessage("bot", "Hello! How are you?");
+        }
+      } else {
+        const botReplies = [
+          "সবজির দাম তো কম।",
+          "ভাই, এসব বলো না... সবজির দাম তো কম!",
+          "দেশ এগোচ্ছে, সবজির দাম কম তো!",
+          "কিন্তু ভাই, সবজির দাম তো কম!!",
+          "বাকিটা পরে দেখি... কিন্তু সবজির দাম তো কম।"
+        ];
+        const reply = botReplies[Math.floor(Math.random() * botReplies.length)];
+        addMessage("bot", reply);
+      }
+
+      userInput.value = "";
+    }
+
+    function addMessage(sender, text) {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = `message ${sender}`;
+      msgDiv.textContent = `${sender === "user" ? "🧍 User:" : "🤖 Bot:"} ${text}`;
+      chatContainer.appendChild(msgDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    userInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") handleSend();
+    });
+  </script>
+
+</body>
+</html>
